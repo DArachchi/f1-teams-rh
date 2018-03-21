@@ -1,0 +1,23 @@
+{
+  "name": "f1-teams-sso",
+  "version": "1.0.0",
+  "description": "Simple full-stack web application to demonstrate Single Sign On (Part 1)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DArachchi/f1-teams-sso.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DArachchi/f1-teams-sso/issues"
+  },
+  "homepage": "https://github.com/DArachchi/f1-teams-sso#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
