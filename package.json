@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/DArachchi/f1-teams-sso#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mongoose": "^5.0.11"
   }
 }
