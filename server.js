@@ -2,6 +2,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+//var auth0js = require("auth0-js");
 
 // Requiring team model
 var Team = require("./models/team.js");
