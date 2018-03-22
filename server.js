@@ -3,6 +3,10 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 
+// Requiring team model
+var Team = require("./models/team.js");
+
+// Initial express
 var app = express();
 var PORT = process.env.PORT || 8080;
 
@@ -13,8 +17,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
+// Make public a static directory
+app.use(express.static("public"));
+
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/f1-teams");
+mongoose.connect("mongodb://localhost:27017/f1-teams");
 
 var db = mongoose.connection;
 
@@ -28,12 +35,20 @@ db.once("open", function() {
 	console.log("Mongoose connection successful.");
 });
 
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "/public/index.html"));
+// GET route to pull teams from database
+app.get("/teams", function(req, res) {
+	Team.find({}, function(error, teams) {
+		if (error) {
+			res.send(error);
+		}
+		else {
+			res.json(teams);
+		}
+	})
 });
 
-app.get("/api/teams", function(req, res) {
-  res.json(teams);
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
 app.listen(PORT, function() {
