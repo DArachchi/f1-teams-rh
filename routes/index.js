@@ -41,8 +41,8 @@ router.get('/teams', ensureLoggedIn, function(req,res) {
 			res.send(error);
 		}
 		else {
-            //var teams = JSON.parse(data);
-            console.log(data)
+            data = JSON.stringify(data);
+            data = JSON.parse(data);
             res.render('teams', {user: req.user, teams: data});
 		}
 	})

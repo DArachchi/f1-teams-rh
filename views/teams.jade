@@ -9,7 +9,5 @@ block content
   br
   div.jumbotron
     h1.text-center 2018 F1 Team Names
-  ul
-  each team in teams
-    li
-      strong #{team}
+  each team, index in teams
+    p #{team.name}
