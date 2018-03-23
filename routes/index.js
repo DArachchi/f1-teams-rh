@@ -17,7 +17,7 @@ var Team = require("../models/team.js");
 
 // Set up routes
 router.get('/', function(req,res) {
-    res.send('This is the homepage');
+    res.render('index', {env: env});
 });
 
 router.get('/login', passport.authenticate('auth0', {
@@ -27,7 +27,7 @@ router.get('/login', passport.authenticate('auth0', {
     responseType: 'code',
     scope: 'openid profile email'
     }), function(req,res) {
-    res.send('This is the login page')
+    res.render('login', { env: env});
 });
 
 router.get('/logout', function(req,res) {
@@ -36,18 +36,16 @@ router.get('/logout', function(req,res) {
 });
 
 router.get('/teams', ensureLoggedIn, function(req,res) {
-	Team.find({}, function(error, teams) {
+	Team.find({}, function(error, data) {
 		if (error) {
 			res.send(error);
 		}
 		else {
-			res.json(teams);
+            //var teams = JSON.parse(data);
+            console.log(data)
+            res.render('teams', {user: req.user, teams: data});
 		}
 	})
-});
-
-router.get('/user', function(req,res) {
-    res.send('This is the user page')
 });
 
 router.get('/callback', passport.authenticate('auth0',

@@ -1,5 +1,6 @@
 // Dependencies
 var express = require("express");
+var path = require('path');
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var session = require("express-session");
@@ -42,6 +43,9 @@ passport.deserializeUser(function(user, done) {
 var app = express();
 var PORT = process.env.PORT || 8080;
 
+// Setup Jade view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -60,7 +64,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Make public a static directory
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Load Routes
 app.use('/', routes);
