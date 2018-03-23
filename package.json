@@ -18,8 +18,15 @@
   },
   "homepage": "https://github.com/DArachchi/f1-teams-sso#readme",
   "dependencies": {
-    "auth0-js": "^9.4.0",
+    "connect-ensure-login": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "mongoose": "^5.0.11"
+    "express-jwt": "^5.3.1",
+    "flash": "^1.1.0",
+    "jwks-rsa": "^1.2.1",
+    "mongoose": "^5.0.11",
+    "passport": "^0.4.0",
+    "passport-auth0": "^0.6.1"
   }
 }

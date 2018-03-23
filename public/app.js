@@ -17,6 +17,7 @@ function displayStatus() {
 }
 
 function saveAuthResult (result) {
+    localStorage.setItem('idToken', result.idToken);
     localStorage.setItem('accessToken', result.accessToken);
     localStorage.setItem('expirationDate', Date.now() + Number.parseInt(result.expiresIn) * 1000);
     displayStatus();
@@ -26,6 +27,7 @@ function renew () {
     auth0js.checkSession({
     }, function (err, result) {
         if (err) {
+            console.log(err);
             alert(`Could not get a new token using silent authentication (${err.error}). Redirecting to login page...`);
             auth0js.authorize();
         } else {

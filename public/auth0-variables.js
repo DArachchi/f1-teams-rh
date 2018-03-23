@@ -10,6 +10,6 @@ const auth0js = new auth0.WebAuth({
     clientID: AUTH0_CLIENT_ID,
     audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
     scope: 'openid profile',
-    responseType: 'token',
+    responseType: 'token id_token',
     redirectUri: 'http://localhost:8080'
 });
