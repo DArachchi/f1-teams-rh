@@ -1,55 +1,58 @@
-const express = require('express');
-const passport = require('passport');
-const router = express.Router();
+// Dependencies
+var express = require("express");
+var passport = require("passport");
+var router = express.Router();
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn();
+var request = require('request');
 
-const env = {
-  AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-  AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
-  AUTH0_CALLBACK_URL:
-    process.env.AUTH0_CALLBACK_URL
+var env = {
+    AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
+    AUTH0_DOMAIN: process.env.AUTH0_DOMAIN,
+    AUTH0_CALLBACK_URL: process.env.AUTH0_CALLBACK_URL
 };
+  
 
-// GET homepage
-router.get('/', function(req, res, next) {
-  res.render('index');
+// Requiring team model
+var Team = require("../models/team.js");
+
+// Set up routes
+router.get('/', function(req,res) {
+    res.send('This is the homepage');
 });
 
-// Login
 router.get('/login', passport.authenticate('auth0', {
-  clientID: env.AUTH0_CLIENT_ID,
-  domain: env.AUTH0_DOMAIN,
-  redirectUri: env.AUTH0_CALLBACK_URL,
-  responseType: 'code',
-  audience: 'https://' + env.AUTH0_DOMAIN + '/userinfo',
-  scope: 'openid profile'}),
-  function(req, res) {
-    res.redirect("/");
+    clientId: env.AUTH0_CLIENT_ID,
+    domain: env.AUTH0_DOMAIN,
+    redirectUri: env.AUTH0_CALLBACK_URL,
+    responseType: 'code',
+    scope: 'openid profile email'
+    }), function(req,res) {
+    res.send('This is the login page')
 });
 
-// Logout and return to homepage
-router.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
+router.get('/logout', function(req,res) {
+    req.logout();
+    res.redirect('/');
 });
 
-// Final stage of authentication and redirect to /user
-router.get('/callback',
-  passport.authenticate('auth0', {
-    failureRedirect: '/failure'
-  }),
-  function(req, res) {
-    res.redirect(req.session.returnTo || '/user');
-  }
-);
+router.get('/teams', ensureLoggedIn, function(req,res) {
+	Team.find({}, function(error, teams) {
+		if (error) {
+			res.send(error);
+		}
+		else {
+			res.json(teams);
+		}
+	})
+});
 
-router.get('/failure', function(req, res) {
-  var error = req.flash("error");
-  var error_description = req.flash("error_description");
-  req.logout();
-  res.render('failure', {
-    error: error[0],
-    error_description: error_description[0],
-  });
+router.get('/user', function(req,res) {
+    res.send('This is the user page')
+});
+
+router.get('/callback', passport.authenticate('auth0',
+    {failureRedirect: 'url-if-something-fails'}), function(req,res) {
+        res.redirect(req.session.returnTo || '/teams');
 });
 
 module.exports = router;
