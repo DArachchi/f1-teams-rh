@@ -70,7 +70,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost:27017/f1-teams");
+mongoose.connect(process.env.MONGODB_URI);
 
 var db = mongoose.connection;
 
