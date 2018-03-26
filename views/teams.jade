@@ -3,7 +3,7 @@ extends layout
 block content  
   div.clearfix
     div.pull-left
-      span F1 Teams
+      span Currently logged in as: #{user.displayName}
     div.pull-right
       a(href="/logout") Logout
   br

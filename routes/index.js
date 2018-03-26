@@ -27,7 +27,7 @@ router.get('/login', passport.authenticate('auth0', {
     responseType: 'code',
     scope: 'openid profile email'
     }), function(req,res) {
-    res.render('login', { env: env});
+        res.render('login', { env: env});
 });
 
 router.get('/logout', function (req, res){
