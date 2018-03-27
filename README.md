@@ -1,2 +1,2 @@
-# f1-teams-sso
-Simple full-stack web application to demonstrate Single Sign On (Part 1)
+# f1-teams-rh
+Full stack web application to demonstrate Red Hat Single Sign On (Part 1)

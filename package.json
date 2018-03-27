@@ -1,7 +1,7 @@
 {
-  "name": "f1-teams-sso",
+  "name": "f1-teams-rh",
   "version": "1.0.0",
-  "description": "Simple full-stack web application to demonstrate Single Sign On (Part 1)",
+  "description": "Full stack web application to demonstrate Red Hat Single Sign On (Part 1)",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DArachchi/f1-teams-sso.git"
+    "url": "git+https://github.com/DArachchi/f1-teams-rh.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/DArachchi/f1-teams-sso/issues"
+    "url": "https://github.com/DArachchi/f1-teams-rh/issues"
   },
-  "homepage": "https://github.com/DArachchi/f1-teams-sso#readme",
+  "homepage": "https://github.com/DArachchi/f1-teams-rh#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
     "connect-ensure-login": "^0.1.1",
