@@ -6,40 +6,17 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var mongoose = require("mongoose");
 var dotenv = require("dotenv");
-var passport = require("passport");
-var Auth0Strategy = require("passport-auth0");
+var Keycloak = require("keycloak-connect");
 
 // Load in environmental variables from .env
 dotenv.load();
 
+// Instantiate a Keycloack class
+var memoryStore = new session.MemoryStore();
+var keycloak = new Keycloak({ store: memoryStore});
+
 // Require routes
 var routes = require("./routes/index");
-
-// Configure passport to use Auth0
-var strategy = new Auth0Strategy({
-	domain:       process.env.AUTH0_DOMAIN,
-	clientID:     process.env.AUTH0_CLIENT_ID,
-	clientSecret: process.env.AUTH0_CLIENT_SECRET,
-	callbackURL:  process.env.AUTH0_CALLBACK_URL,
-	passReqToCallback: true
-}, function(req, accessToken, refreshToken, extraParams, profile, done) {
-	// accessToken is the token to call Auth0 API (not needed in the most cases)
-	// extraParams.id_token has the JSON Web Token
-	// profile has all the information from the user
-	req.session.id_token = extraParams.id_token;
-	console.log(req.session)
-	return done(null, profile._json);
-});
-
-passport.use(strategy);
-
-// This section can be used to keep a smaller payload
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 // Initial express
 var app = express();
@@ -55,15 +32,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(cookieParser());
-
-// Set up Authentication
-app.use(session({
-	secret: 'shhhhhhhhh',
-	resave: true,
-	saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Make public a static directory
 app.use(express.static(path.join(__dirname, 'public')));
