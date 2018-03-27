@@ -2,25 +2,24 @@
 var express = require("express");
 var path = require('path');
 var bodyParser = require("body-parser");
-var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var mongoose = require("mongoose");
 var dotenv = require("dotenv");
 var Keycloak = require("keycloak-connect");
 
+// Require team model
+var Team = require("./models/team.js");
+
 // Load in environmental variables from .env
 dotenv.load();
 
-// Instantiate a Keycloack class
+// Instantiate a Keycloack class and create session-store for express and keycloak middlewares
 var memoryStore = new session.MemoryStore();
-var keycloak = new Keycloak({ store: memoryStore});
+var keycloak = new Keycloak({ store: memoryStore });
 
-// Require routes
-var routes = require("./routes/index");
-
-// Initial express
+// Initialize express
 var app = express();
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT;
 
 // Setup Jade view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -31,13 +30,50 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
-app.use(cookieParser());
 
 // Make public a static directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Load Routes
-app.use('/', routes);
+app.use(session({
+	secret: 'some secret',
+	resave: false,
+	saveUninitialized: true,
+	store: memoryStore
+  }));
+app.use(keycloak.middleware({
+	logout: '/logout',
+	admin: '/'
+}));
+
+// Routes
+app.get('/', function(req,res) {
+    res.render('index');
+});
+
+app.get('/login', keycloak.protect(), function(req,res) {
+        res.render('login');
+});
+
+app.get('/logout', function (req, res){
+    res.redirect(redirectUrl);
+});
+
+app.get('/teams', function(req,res) {
+	Team.find({}, function(error, data) {
+		if (error) {
+			res.send(error);
+		}
+		else {
+            data = JSON.stringify(data);
+            data = JSON.parse(data);
+            res.render('teams', {user: req.user, teams: data});
+		}
+	})
+});
+
+app.get('/callback', function(req,res) {
+        res.redirect(req.session.returnTo || '/teams');
+});
 
 // Database configuration with mongoose
 mongoose.connect(process.env.MONGODB_URI);
