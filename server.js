@@ -50,15 +50,7 @@ app.get('/', function(req,res) {
     res.render('index');
 });
 
-app.get('/login', keycloak.protect(), function(req,res) {
-        res.render('login');
-});
-
-app.get('/logout', function (req, res){
-    res.redirect(redirectUrl);
-});
-
-app.get('/teams', function(req,res) {
+app.get('/teams', keycloak.protect('realm:user'), function(req,res) {
 	Team.find({}, function(error, data) {
 		if (error) {
 			res.send(error);

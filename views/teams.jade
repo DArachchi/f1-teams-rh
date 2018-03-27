@@ -3,11 +3,12 @@ extends layout
 block content  
   div.clearfix
     div.pull-left
-      span Currently logged in as #{user.email}
+      //span Currently logged in as #{user.email}
       br
-      span Profile last updated at #{user.updated_at}
+      //span Profile last updated at #{user.updated_at}
     div.pull-right
-      a(href="/logout") Logout
+      a(href="/logout")
+        button() Logout
   br
   div.jumbotron
     h1.text-center 2018 F1 Team Names

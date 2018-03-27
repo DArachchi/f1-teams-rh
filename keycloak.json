@@ -1,8 +1,10 @@
 {
   "realm": "f1-sso",
-  "bearer-only": true,
   "auth-server-url": "http://localhost:8180/auth",
   "ssl-required": "external",
   "resource": "f1-rhsso",
+  "credentials": {
+    "secret": "99de819c-b14b-4f74-a057-a2d0ff74c057"
+  },
   "confidential-port": 0
 }
