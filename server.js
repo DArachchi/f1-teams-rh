@@ -63,8 +63,8 @@ app.get('/teams', keycloak.protect('realm:user'), function(req,res) {
 	})
 });
 
-app.get('/callback', function(req,res) {
-        res.redirect(req.session.returnTo || '/teams');
+app.get('/denied', function(req,res) {
+    res.render('denied');
 });
 
 // Database configuration with mongoose

@@ -6,5 +6,8 @@
   "credentials": {
     "secret": "5f3ee450-cedb-4152-a8bf-b8dcbabc79c8"
   },
-  "confidential-port": 0
+  "confidential-port": 0,
+  "policy-enforcer": {
+    "on-deny-redirect-to" : "/denied"
+    }    
 }
