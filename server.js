@@ -56,9 +56,20 @@ app.get('/teams', keycloak.protect('realm:user'), function(req,res) {
 			res.send(error);
 		}
 		else {
+			// Remove leading spaces from ids from MongoDB data
             data = JSON.stringify(data);
-            data = JSON.parse(data);
-            res.render('teams', {user: req.user, teams: data});
+			data = JSON.parse(data);
+
+			// Place relevant user info to a user object
+			var user  = {};
+			var content = req.kauth.grant.access_token.content;
+			user.name = content.name;
+			user.firstName = content.given_name;
+			user.lastName = content.family_name;
+			user.username = content.preferred_username;
+			user.email = content.email;
+
+            res.render('teams', {user: user, teams: data});
 		}
 	})
 });

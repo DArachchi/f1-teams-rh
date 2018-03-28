@@ -3,9 +3,11 @@ extends layout
 block content  
   div.clearfix
     div.pull-left
-      //span Currently logged in as #{user.email}
+      span Hello #{user.name}
       br
-      //span Profile last updated at #{user.updated_at}
+      span You are currently logged in as #{user.username}
+      br
+      span Your email address is #{user.email}
     div.pull-right
       a(href="/logout")
         button() Logout
