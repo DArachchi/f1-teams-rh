@@ -1,0 +1,10 @@
+{
+  "realm": "f1-sso",
+  "auth-server-url": "http://localhost:8180/auth",
+  "ssl-required": "external",
+  "resource": "f1-teams-rh",
+  "credentials": {
+    "secret": "5f3ee450-cedb-4152-a8bf-b8dcbabc79c8"
+  },
+  "confidential-port": 0
+}
