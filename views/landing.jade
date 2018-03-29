@@ -1,0 +1,19 @@
+extends layout
+
+block content  
+  div.clearfix
+    div.pull-left
+      span Hello #{user.name}
+      br
+      span You are currently logged in as #{user.username}
+      br
+      span Your email address is #{user.email}
+    div.pull-right
+      a(href="/logout")
+        button() Logout
+  br
+  div.jumbotron
+    h1.text-center 2018 F1 Team Names
+
+
+  a(href="/teams") Team Data

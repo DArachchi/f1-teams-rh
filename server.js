@@ -50,6 +50,19 @@ app.get('/', function(req,res) {
     res.render('index');
 });
 
+app.get('/landing', keycloak.protect(), function(req,res) {
+	// Place relevant user info to a user object
+		var user  = {};
+		var content = req.kauth.grant.access_token.content;
+		user.name = content.name;
+		user.firstName = content.given_name;
+		user.lastName = content.family_name;
+		user.username = content.preferred_username;
+		user.email = content.email;
+
+    res.render('landing', {user: user});
+});
+
 app.get('/teams', keycloak.protect('realm:user'), function(req,res) {
 	Team.find({}, function(error, data) {
 		if (error) {
