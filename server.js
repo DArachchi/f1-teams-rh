@@ -63,7 +63,7 @@ app.get('/landing', keycloak.protect(), function(req,res) {
     res.render('landing', {user: user});
 });
 
-app.get('/teams', keycloak.protect('realm:user'), function(req,res) {
+app.get('/teams', keycloak.protect('realm:Teams'), function(req,res) {
 	Team.find({}, function(error, data) {
 		if (error) {
 			res.send(error);

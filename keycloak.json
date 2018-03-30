@@ -1,13 +1,10 @@
 {
-  "realm": "f1-sso",
-  "auth-server-url": "http://localhost:8180/auth",
+  "realm": "f1-rh-cluster",
+  "auth-server-url": "http://localhost:8080/auth",
   "ssl-required": "external",
   "resource": "f1-teams-rh",
   "credentials": {
-    "secret": "5f3ee450-cedb-4152-a8bf-b8dcbabc79c8"
+    "secret": "0744c9a8-9f73-45b1-aaa9-afca661f5ba8"
   },
-  "confidential-port": 0,
-  "policy-enforcer": {
-    "on-deny-redirect-to" : "/denied"
-    }    
+  "confidential-port": 0
 }
